@@ -205,7 +205,7 @@ export default function AddProduct() {
         {product.categoryId && (
           <select
             value={product.subcategory || ""}
-            onChange={(e) => handleChange("subcategory" as any, e.target.value)}
+            onChange={(e) => handleChange("subcategory" , e.target.value)}
             className="w-full p-3 border border-gray-400 rounded-xl"
             required
           >
