@@ -14,19 +14,25 @@ interface Product {
   description: string;
   categoryId: string;
   images: string[];
+  subcategory?: string;
 }
 
 interface Category {
   id: string;
   name: string;
   icon: string;
+  subcategory?: string[];
 }
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string>("");
   const [loading, setLoading] = useState(true);
+
+  const subcategory =
+    categories.find((cat) => cat.id === selectedCategory)?.subcategory || [];
 
   useEffect(() => {
     fetchProducts();
@@ -69,9 +75,17 @@ export default function Products() {
     );
   }
 
-  const filteredProducts = selectedCategory
-    ? products.filter((product) => product.categoryId === selectedCategory)
-    : products;
+  const filteredProducts = products.filter((product) => {
+    const matchCategory = selectedCategory
+      ? product.categoryId === selectedCategory
+      : true;
+
+    const matchSubcategory = selectedSubcategory
+      ? product.subcategory === selectedSubcategory
+      : true;
+
+    return matchCategory && matchSubcategory;
+  });
 
   return (
     <div className="max-w-6xl mx-auto p-6  shadow-lg rounded-lg mt-20 flex flex-col gap-4">
@@ -111,6 +125,24 @@ export default function Products() {
           </button>
         ))}
       </div>
+      {/* Subcategory Filter */}
+      {subcategory.length > 0 && (
+        <div className="flex flex-wrap gap-2 justify-center mb-6">
+          {subcategory.map((sub) => (
+            <button
+              key={sub}
+              onClick={() => setSelectedSubcategory(sub)}
+              className={`px-3 py-1 rounded-xl border shadow-md ${
+                selectedSubcategory === sub
+                  ? "bg-bgreen text-white"
+                  : "bg-white text-bgreen"
+              }`}
+            >
+              {sub}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Product Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

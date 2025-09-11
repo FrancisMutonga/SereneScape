@@ -5,7 +5,7 @@ import { FaHome, FaUser, FaSignOutAlt, FaBars, FaUsers } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
-import { FaNewspaper, FaSignHanging } from "react-icons/fa6";
+import { FaLayerGroup, FaNewspaper, FaSignHanging } from "react-icons/fa6";
 
 interface SidebarItemProps {
   icon: React.ReactNode;
@@ -101,6 +101,13 @@ const Sidebar = () => {
                 onClick={handleSidebarLinkClick}
               />
               <SidebarItem
+                icon={<FaLayerGroup />}
+                label="Categories"
+                link="/admin/categories"
+                isOpen
+                onClick={handleSidebarLinkClick}
+              />
+              <SidebarItem
                 icon={<FaNewspaper />}
                 label="News"
                 link="/admin/news"
@@ -170,6 +177,13 @@ const Sidebar = () => {
             onClick={() => setIsOpen(false)}
           />
           <SidebarItem
+            icon={<FaLayerGroup />}
+            label="Categories"
+            link="/admin/categories"
+            isOpen={isOpen}
+            onClick={() => setIsOpen(false)}
+          />
+           <SidebarItem
             icon={<FaNewspaper />}
             label="News"
             link="/admin/news"

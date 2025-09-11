@@ -254,7 +254,7 @@ const ContactPage: React.FC = () => {
                 </h4>
                 <div className="relative w-full h-72">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8638740486124!2d36.6540434!3d-1.2809019!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1fe9750c840b%3A0x9beae1bf0ec51cca!2sShell%20Gikambura%20Petrol%20Station!5e0!3m2!1sen!2ske!4v1724843980000!5m2!1sen!2ske"
+                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d19988.42123075205!2d36.7742796!3d-1.8420731!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182fc559d2acbce5%3A0x0!2sKajiado%2C%20Kenya!5e0!3m2!1sen!2ske!4v0!5m2!1sen!2ske"
                     allowFullScreen
                     loading="lazy"
                     className="absolute top-0 left-0 w-full h-full border-0 rounded-lg"

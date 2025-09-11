@@ -19,7 +19,7 @@ const Reviews: React.FC = () => {
   const reviews: Review[] = [
     {
       name: "Grace",
-      title: "Homeowner - Nairobi",
+      title: "Land owner - Nairobi",
       profilePic: "/images/review3.jpg",
       testimony:
         "We found the perfect plot within a week — so professional!",
@@ -43,10 +43,10 @@ const Reviews: React.FC = () => {
     },
     {
       name: "Joan",
-      title: "Land owner",
-      profilePic: "/images/review2.jpg",
+      title: "Home owner",
+      profilePic: "/images/reviewv.jpg",
       testimony:
-        "I now work in a safe, respectful home. Thank you, MAA!",
+        "I Retired in a safe, respectful home. Thank you!",
       date: "April 18, 2025",
     },
   ];
