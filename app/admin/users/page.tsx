@@ -9,8 +9,8 @@ import Image from "next/image";
 
 type UserType = {
   id: string;
-  username: string;
-  email: string;
+  username?: string;
+  email?: string;
   role: string;
   photoURL?: string | null;
 };
@@ -25,13 +25,15 @@ export default function ManageUsers() {
     const fetchUsers = async () => {
       const querySnapshot = await getDocs(collection(db, "users"));
       const usersData: UserType[] = [];
-       
+
       await Promise.all(
         querySnapshot.docs.map(async (doc) => {
           const userData = { id: doc.id, ...doc.data() } as UserType;
 
           try {
-            const url = await getDownloadURL(ref(storage, `profilepics/${userData.id}`));
+            const url = await getDownloadURL(
+              ref(storage, `profilepics/${userData.id}`)
+            );
             userData.photoURL = url;
           } catch {
             userData.photoURL = null; // fallback to initials
@@ -42,7 +44,7 @@ export default function ManageUsers() {
       );
 
       setUsers(usersData);
-       setLoading(false);
+      setLoading(false);
     };
 
     fetchUsers();
@@ -56,13 +58,14 @@ export default function ManageUsers() {
     );
   }
 
-
   const filteredUsers = users.filter((user) => {
     const matchSearch =
-      user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase());
+      (user.username?.toLowerCase().includes(searchTerm.toLowerCase()) ??
+        false) ||
+      (user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false);
 
-    const matchRole = filterRole === "all" || user.role.toLowerCase() === filterRole;
+    const matchRole =
+      filterRole === "all" || user.role.toLowerCase() === filterRole;
 
     return matchSearch && matchRole;
   });
@@ -91,13 +94,12 @@ export default function ManageUsers() {
         />
 
         <select
-          className="p-2 border  border-gray-400 rounded-xl bg-white/50 text-gray-800"
+          className="p-2 border border-gray-400 rounded-xl bg-white/50 text-gray-800"
           value={filterRole}
           onChange={(e) => setFilterRole(e.target.value)}
         >
           <option value="all">All Roles</option>
           <option value="admin">Admin</option>
-                    
         </select>
       </div>
 
@@ -111,22 +113,24 @@ export default function ManageUsers() {
                     <Image
                       src={user.photoURL}
                       alt="Profile"
-                      width={20}
-                      height={20}
+                      width={80}
+                      height={80}
                       className="w-20 h-20 rounded-full object-cover shadow-md"
                     />
                   ) : (
                     <div className="w-20 h-20 rounded-full bg-green-50 text-bgreen flex items-center justify-center text-2xl font-bold uppercase shadow-inner">
                       {user.username
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")
-                        .slice(0, 2)}
+                        ? user.username
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                            .slice(0, 2)
+                        : "NA"}
                     </div>
                   )}
 
                   <div className="mt-3 text-xl font-semibold text-bgreen text-center">
-                    {user.username}
+                    {user.username || "Unknown"}
                   </div>
 
                   <div className="text-sm text-gray-800 capitalize">
@@ -136,7 +140,9 @@ export default function ManageUsers() {
               </Link>
             ))
           ) : (
-            <div className="text-gray-500 text-center w-full py-10">No users found.</div>
+            <div className="text-gray-500 text-center w-full py-10">
+              No users found.
+            </div>
           )}
         </div>
       </div>
